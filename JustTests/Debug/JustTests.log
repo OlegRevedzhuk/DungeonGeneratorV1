@@ -1,0 +1,3 @@
+﻿  JustTests.cpp
+c:\users\sunset\documents\visual studio 2017\projects\justtests\justtests\justtests.cpp(8): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  JustTests.vcxproj -> C:\Users\Sunset\Documents\Visual Studio 2017\Projects\JustTests\Debug\JustTests.exe
