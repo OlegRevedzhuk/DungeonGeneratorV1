@@ -16,3 +16,17 @@ char Cell::getCellDisplay() const
 	default: return '?';
 	}
 }
+
+bool Cell::isEmpty() const
+{
+	if (m_cellType == SpaceType::empty)
+		return true;
+	else return false;
+}
+
+std::ostream& operator<<(std::ostream &out, const Cell &cell)
+{
+	out << cell.getCellDisplay();
+
+	return out;
+}

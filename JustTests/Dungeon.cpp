@@ -1,14 +1,18 @@
 #include "Dungeon.h"
 
-Dungeon::Dungeon(int numberOfRooms, int minRoomSize, int maxRoomSize) :
-	m_map{ numberOfRooms },
+Dungeon::Dungeon(const int numberOfRooms, const int minRoomSize, const int maxRoomSize) :
+	m_dungeonSize{ numberOfRooms - 1 }, //doesnt include starting room
 	m_startingRoom{},
-	m_dungeonSize{ numberOfRooms - 1 } //doesnt include starting room
+	m_map{ numberOfRooms }
 {
 	m_dungeonRooms.reserve(m_dungeonSize);
 
 	for (int count{ }; count < m_dungeonSize; ++count)
-		m_dungeonRooms.push_back(Room{ RngGen::randomNumberInRange(minRoomSize, maxRoomSize) });
+		m_dungeonRooms.emplace_back(RngGen::randomNumberInRange(minRoomSize, maxRoomSize));
+
+	populateDungeon();
+
+	connectDungeon();
 }
 
 void Dungeon::populateDungeon()
@@ -38,7 +42,7 @@ void Dungeon::addRoomsOnMap()
 	std::shuffle(shuffledDungeon.begin(), shuffledDungeon.end(), RngGen::getPRNG());
 	m_allDoors.reserve(2 * m_dungeonSize);
 
-	// always start with starting room (1) at (0, 0)
+	// always start with starting room (1) at (0, 0), we then iterate through all the rooms in dungeon
 	for (int index{ }; index < m_dungeonSize; ++index)
 	{
 		int anchorIndex{};
@@ -60,19 +64,19 @@ void Dungeon::addRoomsOnMap()
 				if (anchorIndex == -1)
 				{
 					//limit how many times starting room can be used as an anchor
-					if (startingRoomNumOfAdjacentRooms > myConstants::startingRoomMaxAdjacent)
+					if (startingRoomNumOfAdjacentRooms >= myConstants::startingRoomMaxAdjacent)
 						break;
 
-					if (m_map.hasEmptyAdjacentNear(myConstants::startingRoomID, (*directionOrder)[count]))
+					if (m_map.hasEmptyAdjacentNear(myConstants::startingRoomID, directionOrder[count]))
 					{
-						dir = (*directionOrder)[count];
+						dir = directionOrder[count];
 						emptySpaceFound = true;
 						break;
 					}
 				}
-				else if (m_map.hasEmptyAdjacentNear(shuffledDungeon[anchorIndex].getRoomID(), (*directionOrder)[count]))
+				else if (m_map.hasEmptyAdjacentNear(shuffledDungeon[anchorIndex].getRoomID(), directionOrder[count]))
 				{
-					dir = (*directionOrder)[count];
+					dir = directionOrder[count];
 					emptySpaceFound = true;
 					break;
 				}
@@ -87,23 +91,24 @@ void Dungeon::addRoomsOnMap()
 			m_map.updateMapWithRoom(myConstants::startingRoomID, roomID, dir);
 			++startingRoomNumOfAdjacentRooms;
 
-			m_allDoors.push_back({
+			m_allDoors.emplace_back(
 				myConstants::startingRoomID,
 				roomID,
 				m_startingRoom.getDoorPointer(dir),
 				shuffledDungeon[index].getDoorPointer(RngGen::getOppositeDirection(dir))
-				});
+				);
 		}
 		else
 		{
-			m_map.updateMapWithRoom(shuffledDungeon[anchorIndex].getRoomID(), roomID, dir);
+			int anchorRoomID{ shuffledDungeon[anchorIndex].getRoomID() };
+			m_map.updateMapWithRoom(anchorRoomID, roomID, dir);
 
-			m_allDoors.push_back({
-				shuffledDungeon[anchorIndex].getRoomID(),
+			m_allDoors.emplace_back(
+				anchorRoomID,
 				roomID,
 				shuffledDungeon[anchorIndex].getDoorPointer(dir),
 				shuffledDungeon[index].getDoorPointer(RngGen::getOppositeDirection(dir))
-				});
+				);
 		}
 	}
 }
@@ -115,11 +120,11 @@ void Dungeon::addNonLinearConnections()
 	{
 		int roomID{ m_dungeonRooms[index].getRoomID() };
 
-		for (int dir{}; dir < static_cast<int>(Direction::totalDirections); ++dir)
+		for (Direction dir{Direction::north}; dir < Direction::totalDirections; ++dir)
 		{
-			if (!m_map.hasEmptyAdjacentNear(roomID, static_cast<Direction>(dir)))
+			if (!m_map.hasEmptyAdjacentNear(roomID, dir))
 			{
-				int adjacentRoomID{ m_map.getAdjacentRoomID(roomID, static_cast<Direction>(dir)) };
+				int adjacentRoomID{ m_map.getAdjacentRoomID(roomID, dir) };
 				//not adding extra connections to starting room, so skip
 				if (adjacentRoomID == myConstants::startingRoomID)
 					continue;
@@ -130,12 +135,12 @@ void Dungeon::addNonLinearConnections()
 
 				// -2 below because the first rng room housed in dungeonRooms[0] has ID 2, so m_dungeonRooms[index].getRoomID() = index+2
 				if (existingDoorConnection == m_allDoors.end())
-					m_allDoors.push_back({
-						m_dungeonRooms[index].getRoomID(),
+					m_allDoors.emplace_back(
+						roomID,
 						adjacentRoomID,
-						m_dungeonRooms[index].getDoorPointer(static_cast<Direction>(dir)),
-						m_dungeonRooms[adjacentRoomID - 2].getDoorPointer(RngGen::getOppositeDirection(static_cast<Direction>(dir)))
-						});
+						m_dungeonRooms[index].getDoorPointer(dir),
+						m_dungeonRooms[adjacentRoomID - 2].getDoorPointer(RngGen::getOppositeDirection(dir))
+						);
 			}
 		}
 	}
@@ -143,19 +148,21 @@ void Dungeon::addNonLinearConnections()
 
 void Dungeon::addDoorsToRooms()
 {
-	for (int index{ }; index < m_allDoors.size(); ++index)
+	for (auto &doorConnection : m_allDoors)
 	{
-		*m_allDoors[index].firstDoor = SpaceType::door;
-		*m_allDoors[index].secondDoor = SpaceType::door;
+		*doorConnection.firstDoor = SpaceType::door;
+		*doorConnection.secondDoor = SpaceType::door;
 	}
 }
 
-void Dungeon::printDungeon() const
+std::ostream & operator<<(std::ostream & out, Dungeon dungeon)
 {
-	m_startingRoom.print();
+	out << dungeon.m_startingRoom;
 
-	for (const auto &room : m_dungeonRooms)
-		room.print();
+	for (const auto &room : dungeon.m_dungeonRooms)
+		out << room;
 
-	m_map.printDungeonMap();
+	out << dungeon.m_map;
+
+	return out;
 }

@@ -19,11 +19,7 @@ int main()
 {
 	Dungeon dungeon{ 10, myConstants::rngRoomMinSize, myConstants::rngRoomMaxSize };
 
-	dungeon.populateDungeon();
-
-	dungeon.connectDungeon();
-
-	dungeon.printDungeon();
+	std::cout << dungeon;
 
 	return 0;
 }

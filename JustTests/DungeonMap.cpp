@@ -3,41 +3,27 @@
 //the number of rooms y that radius x can hold is y = (2x+1)^2, so we solve for y and add padding for varience to determine m_mapRadius
 //the padding starts at 5 at base case, as the array gets larger there can be slightly more varience so we add extra using a log3.
 //this works well until really high number of rooms, still have to think about how to better allocate right amount of map if ever want to do hundreds of rooms.
-DungeonMap::DungeonMap(int numberOfRooms) : 
+DungeonMap::DungeonMap(const int numberOfRooms) : 
 	m_mapRadius{ 3 + static_cast<int>(std::log10(numberOfRooms)/std::log10(3)) + (static_cast<int>(std::sqrt(numberOfRooms)) - 1) / 2 }, 
 	m_mapLayout{ {0,0,1} }
 {
 	m_mapLayout.reserve((2 * m_mapRadius + 1)*(2 * m_mapRadius + 1));
-
-	int arrayIndex{ 1 };
 
 	//here we add mapRadius amount of layers to the map starting at mapLayout[0] representing the starting room at (0, 0) and working outward
 	//next entry will be mapLayout[1] at (1, 1) and then we go counter clockwise.
 	for (int count{ 1 }; count <= m_mapRadius; ++count)
 	{
 		for (int index{ 0 }; index < (2 * count + 1); ++index)
-		{
 			m_mapLayout.push_back({ count - index, count });
-			++arrayIndex;
-		}
 
 		for (int index{ 1 }; index < (2 * count + 1); ++index)
-		{
 			m_mapLayout.push_back({ (-count), count - index });
-			++arrayIndex;
-		}
 
 		for (int index{ 1 }; index < (2 * count + 1); ++index)
-		{
 			m_mapLayout.push_back({ (-count) + index, (-count) });
-			++arrayIndex;
-		}
 
 		for (int index{ 1 }; index < (2 * count); ++index)
-		{
 			m_mapLayout.push_back({ count, (-count) + index });
-			++arrayIndex;
-		}
 	}
 }
 
@@ -96,24 +82,26 @@ void DungeonMap::updateMapWithRoom(const int anchorRoomID, const int newRoomID, 
 	}
 }
 
-void DungeonMap::printDungeonMap() const
+std::ostream & operator<<(std::ostream & out, const DungeonMap &map)
 {
-	std::cout << "Dungeon room layout:\n";
+	out << "Dungeon room layout:\n";
 
-	for (int index{}; index < m_mapRadius * 2 + 1; ++index)
+	for (int index{}; index < map.m_mapRadius * 2 + 1; ++index)
 	{
-		for (int count{}; count < m_mapRadius * 2 + 1; ++count)
+		for (int count{}; count < map.m_mapRadius * 2 + 1; ++count)
 		{
-			int state{ idOfRoomAtCoords(-m_mapRadius + count, m_mapRadius - index) };
+			int state{ map.idOfRoomAtCoords(-map.m_mapRadius + count, map.m_mapRadius - index) };
 
 			if (state > 0 && state < 10)
-				std::cout << ' ' << state << ' ';
+				out << ' ' << state << ' ';
 			else if (state >= 10)
-				std::cout << ' ' << state;
+				out << ' ' << state;
 			else
-				std::cout << "   ";
+				out << "   ";
 		}
-		std::cout << '\n';
+		out << '\n';
 	}
 	std::cout << '\n';
+
+	return out;
 }

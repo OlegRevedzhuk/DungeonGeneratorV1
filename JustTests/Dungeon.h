@@ -18,6 +18,9 @@ private:
 		int secondRoomID;
 		Cell* firstDoor;
 		Cell* secondDoor;
+
+		DoorStorage(const int firstID, const int secondID, Cell* const firstPointer, Cell* const secondPointer)
+			: firstRoomID{ firstID }, secondRoomID{ secondID }, firstDoor{ firstPointer }, secondDoor{ secondPointer } {}
 	};
 
 private:
@@ -28,21 +31,20 @@ private:
 	std::vector<DoorStorage> m_allDoors;
 
 public:
-	Dungeon(int numberOfRooms, int minRoomSize, int maxRoomSize);
+	Dungeon(const int numberOfRooms, const int minRoomSize, const int maxRoomSize);
 
+private:
 	void populateDungeon();
 
 	void connectDungeon();
 
-private:
 	void addRoomsOnMap();
 
 	void addNonLinearConnections();
 
 	void addDoorsToRooms();
 
-public:
-	void printDungeon() const;
+	friend std::ostream& operator<< (std::ostream &out, Dungeon dungeon);
 };
 
 #endif // !DUNGEON_H

@@ -25,6 +25,7 @@ protected:
 	static int s_nextRoomID;
 
 	int m_roomID;
+	int m_roomSize;
 	GridType_t m_room;
 	std::array<Door, 4> m_doors;
 	int m_numberOfEmptyCells{};
@@ -32,19 +33,19 @@ protected:
 public:
 	Room(const int roomSize = 11);
 
-	void populateMonster(int chance = 85);
+	void populateMonster(const int chance = 85);
 
-	void populateTreasure(int chance = 25);
+	void populateTreasure(const int chance = 25);
 
 private:
-	void populateTrap(int x, int y, int chance = 20);
+	void populateTrap(const int x, const int y, const int chance = 20);
+
+	friend std::ostream& operator<< (std::ostream &out, const Room &room);
 
 public:
 	int getRoomID() const;
 
 	Cell* getDoorPointer(const Direction dir) const;
-
-	void print() const;
 };
 
 #endif // !ROOM_H

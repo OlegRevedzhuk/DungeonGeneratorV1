@@ -9,8 +9,7 @@
 #include <vector>
 #include "constants.h"
 
-class Room;
-
+//not really sure where to put this enum, its used in multiple places, so i put it in RngGen since its my helper file
 enum class Direction
 {
 	north,
@@ -20,6 +19,8 @@ enum class Direction
 	totalDirections,
 };
 
+Direction & operator++(Direction & dir);
+
 class RngGen
 {
 private:
@@ -27,9 +28,6 @@ private:
 	static std::normal_distribution<> s_norm;
 	static int s_currentNormMean;
 	static std::array<Direction, 4> s_currentDirectionOrder;
-
-private:
-	static unsigned int randomNumber();
 
 public:
 	static std::mt19937 getPRNG();
@@ -44,7 +42,7 @@ public:
 
 	//static void shuffleDungeon(std::vector<Room>& dungeon);
 
-	static std::array<Direction, 4>* getDirectionOrder();
+	static const std::array<Direction, 4>& getDirectionOrder();
 
 	static Direction getOppositeDirection(Direction dir);
 };

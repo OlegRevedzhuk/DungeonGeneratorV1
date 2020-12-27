@@ -23,10 +23,12 @@ private:
 	int m_mapRadius;
 
 public:
-	DungeonMap(int numberOfRooms);
+	DungeonMap(const int numberOfRooms);
 
 private:
 	int idOfRoomAtCoords(const int x, const int y) const;
+
+	friend std::ostream& operator<< (std::ostream &out, const DungeonMap &map);
 
 public:
 	int getAdjacentRoomID(const int roomID, const Direction dir) const;
@@ -34,8 +36,6 @@ public:
 	bool hasEmptyAdjacentNear(const int roomID, const Direction dir) const;
 
 	void updateMapWithRoom(const int anchorRoomID, const int newRoomID, const Direction directionFromAnchor);
-
-	void printDungeonMap() const;
 };
 
 #endif // !DUNGEONMAP_H

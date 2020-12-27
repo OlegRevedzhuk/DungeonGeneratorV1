@@ -8,10 +8,14 @@ int RngGen::s_currentNormMean{};
 
 std::array<Direction, 4> RngGen::s_currentDirectionOrder{ {Direction::north, Direction::east, Direction::south, Direction::west} };
 
-unsigned int RngGen::randomNumber()
-	{
-		return s_rng();
-	}
+Direction& operator++(Direction &dir)
+{
+	if (dir == Direction::totalDirections)
+		return dir;
+
+	dir = static_cast<Direction>(static_cast<int>(dir) + 1);
+	return dir;
+}
 
 std::mt19937 RngGen::getPRNG()
 {
@@ -20,7 +24,7 @@ std::mt19937 RngGen::getPRNG()
 
 bool RngGen::percentChanceOfOccurring(const unsigned int percent)
 {
-	if ((randomNumber() % 100) < percent)
+	if ((s_rng() % 100) < percent)
 		return true;
 	else
 		return false;
@@ -28,7 +32,7 @@ bool RngGen::percentChanceOfOccurring(const unsigned int percent)
 
 int RngGen::randomNumberInRange(const int min, const int max)
 {
-	return (randomNumber() % (max - min + 1)) + min;
+	return (s_rng() % (max - min + 1)) + min;
 }
 
 int RngGen::distanceToNextCell(const int roomSize, const int numberOfObjects)
@@ -61,10 +65,10 @@ void RngGen::shuffleDungeon(std::vector<Room>& dungeon)
 }
 */
 
-std::array<Direction, 4>* RngGen::getDirectionOrder()
+const std::array<Direction, 4>& RngGen::getDirectionOrder()
 {
 	std::shuffle(s_currentDirectionOrder.begin(), s_currentDirectionOrder.end(), s_rng);
-	return &s_currentDirectionOrder;
+	return s_currentDirectionOrder;
 }
 
 Direction RngGen::getOppositeDirection(Direction dir)

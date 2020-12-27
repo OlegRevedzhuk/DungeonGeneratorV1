@@ -1,6 +1,8 @@
 #ifndef CELL_H
 #define CELL_H
 
+#include <iostream>
+
 enum class SpaceType
 {
 	wall,
@@ -21,7 +23,13 @@ private:
 public:
 	Cell(const SpaceType cellType = SpaceType::unknown);
 
+private:
 	char getCellDisplay() const;
+
+	friend std::ostream& operator<<(std::ostream &out, const Cell &cell);
+
+public:
+	bool isEmpty() const;
 };
 
 #endif // !CELL_H

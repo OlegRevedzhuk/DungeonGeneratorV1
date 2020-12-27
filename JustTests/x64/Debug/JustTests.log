@@ -1,1 +1,11 @@
-﻿
+﻿  Dungeon.cpp
+  DungeonMap.cpp
+  RngGen.cpp
+  Room.cpp
+c:\users\sunset\documents\github\dungeongeneratorv1\justtests\room.cpp(34): warning C4244: '+=': conversion from '__int64' to 'int', possible loss of data
+  StartingRoom.cpp
+  Generating Code...
+c:\users\sunset\documents\github\dungeongeneratorv1\justtests\rnggen.cpp(84): warning C4715: 'RngGen::getOppositeDirection': not all control paths return a value
+c:\users\sunset\documents\github\dungeongeneratorv1\justtests\dungeon.cpp(91): warning C4701: potentially uninitialized local variable 'dir' used
+  JustTests.cpp
+  JustTests.vcxproj -> C:\Users\Sunset\Documents\GitHub\DungeonGeneratorV1\x64\Debug\JustTests.exe
