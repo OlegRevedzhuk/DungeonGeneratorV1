@@ -80,7 +80,7 @@ void Dungeon::addRoomsOnMap()
 				full.insert(anchorIndex);
 			}
 		}
-		//check to see if we are attempting to add a room spawned off of starting room more times than the limit
+		//limit how many times starting room can be used
 		//potentially can add more limiting functionality here if needed
 		if (anchorIndex == 0)
 		{

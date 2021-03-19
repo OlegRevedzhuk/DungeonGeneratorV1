@@ -20,9 +20,6 @@ private:
 		int secondRoomID;
 		Cell* firstDoor;
 		Cell* secondDoor;
-
-		DoorStorage(const int firstID, const int secondID, Cell* const firstPointer, Cell* const secondPointer)
-			: firstRoomID{ firstID }, secondRoomID{ secondID }, firstDoor{ firstPointer }, secondDoor{ secondPointer } {}
 	};
 
 private:
