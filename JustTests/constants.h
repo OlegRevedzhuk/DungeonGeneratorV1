@@ -16,6 +16,7 @@ namespace myConstants
 	constexpr int minMonsterCount{ 3 };
 	constexpr int maxMonsterCount{ 5 };
 
+	//1 min
 	constexpr int startingRoomMaxAdjacent{ 2 };
 }
 #endif

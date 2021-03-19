@@ -2,6 +2,8 @@
 #define DUNGEON_H
 
 #include <algorithm>
+#include <memory>
+#include <unordered_set>
 #include <vector>
 #include "constants.h"
 #include "DungeonMap.h"
@@ -25,8 +27,7 @@ private:
 
 private:
 	int m_dungeonSize;
-	StartingRoom m_startingRoom;
-	std::vector<Room> m_dungeonRooms;
+	std::vector<std::unique_ptr<Room>> m_dungeonRooms;
 	DungeonMap m_map;
 	std::vector<DoorStorage> m_allDoors;
 
@@ -44,7 +45,7 @@ private:
 
 	void addDoorsToRooms();
 
-	friend std::ostream& operator<< (std::ostream &out, Dungeon dungeon);
+	friend std::ostream& operator<< (std::ostream& out, const Dungeon& dungeon);
 };
 
 #endif // !DUNGEON_H

@@ -8,3 +8,7 @@ StartingRoom::StartingRoom() : Room{ myConstants::startingRoomSize }
 	m_room[8][6] = Cell(SpaceType::chest);
 	m_room[8][9] = Cell(SpaceType::chest);
 }
+
+StartingRoom::~StartingRoom()
+{
+}

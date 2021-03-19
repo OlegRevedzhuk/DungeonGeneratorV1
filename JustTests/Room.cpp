@@ -42,6 +42,10 @@ Room::Room(const int roomSize) : m_roomID{ s_nextRoomID++ }, m_roomSize{roomSize
 	m_doors[static_cast<int>(Direction::west)] = { Direction::west,   (&m_room[RngGen::randomNumberInRange(roomSize / 4, (roomSize * 3) / 4)][0]) };
 }
 
+Room::~Room()
+{
+}
+
 void Room::populateMonster(const int chance) // default = 85
 {
 	bool hasMonster{ RngGen::percentChanceOfOccurring(chance) };

@@ -9,6 +9,7 @@ class StartingRoom :
 {
 public:
 	StartingRoom();
+	virtual ~StartingRoom();
 };
 
 #endif // !STARTINGROOM_H

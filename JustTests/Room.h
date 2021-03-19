@@ -32,6 +32,7 @@ protected:
 
 public:
 	Room(const int roomSize = 11);
+	virtual ~Room();
 
 	void populateMonster(const int chance = 85);
 

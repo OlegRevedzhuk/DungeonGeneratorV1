@@ -5,6 +5,7 @@
 #include "RngGen.h"
 #include "StartingRoom.h"
 
+/*
 enum class Sizes
 {
 	tiny,
@@ -14,10 +15,15 @@ enum class Sizes
 	huge,
 	gargantuan,
 };
+*/
 
 int main()
 {
-	Dungeon dungeon{ 10, myConstants::rngRoomMinSize, myConstants::rngRoomMaxSize };
+	int dungeonSize{};
+	std::cout << "How many rooms would you like to include? ";
+	std::cin >> dungeonSize;
+
+	Dungeon dungeon{ dungeonSize, myConstants::rngRoomMinSize, myConstants::rngRoomMaxSize };
 
 	std::cout << dungeon;
 
