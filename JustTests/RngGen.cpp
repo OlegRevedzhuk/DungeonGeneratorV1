@@ -35,12 +35,12 @@ int RngGen::randomNumberInRange(const int min, const int max)
 	return (s_rng() % (max - min + 1)) + min;
 }
 
-int RngGen::distanceToNextCell(const int roomSize, const int numberOfObjects)
+int RngGen::distanceToNextCell(const int numOfEmptyCells, const int numberOfObjects)
 {
-	if (s_currentNormMean != static_cast<int>(roomSize * roomSize / (numberOfObjects + 0.5)))
+	if (s_currentNormMean != static_cast<int>(2 * numOfEmptyCells / (numberOfObjects + 0.5)))
 	{
-		s_currentNormMean = static_cast<int>(roomSize * roomSize / (numberOfObjects + 0.5));
-		s_norm = std::normal_distribution<>{ roomSize * roomSize / (numberOfObjects + 0.5) , roomSize * roomSize / (numberOfObjects + 0.5) };
+		s_currentNormMean = static_cast<int>(2 * numOfEmptyCells / (numberOfObjects + 0.5));
+		s_norm = std::normal_distribution<>{ 2 * numOfEmptyCells / (numberOfObjects + 0.5) , numOfEmptyCells * 1.5 / (numberOfObjects + 0.5) };
 	}
 	int distance = static_cast<int>(std::lround(s_norm(s_rng)));
 	

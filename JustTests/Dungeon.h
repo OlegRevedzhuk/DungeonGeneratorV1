@@ -6,10 +6,20 @@
 #include <unordered_set>
 #include <vector>
 #include "constants.h"
+#include "DiamondRoom.h"
 #include "DungeonMap.h"
 #include "Room.h"
 #include "RngGen.h"
 #include "StartingRoom.h"
+#include "SquareRoom.h"
+
+struct DungeonParameters
+{
+	int numberOfRooms{ myConstants::rngDungeonDefaultSize };
+	int minRoomSize{ myConstants::rngRoomMinSize };
+	int maxRoomSize{ myConstants::rngRoomMaxSize };
+	//additional parameters in future
+};
 
 class Dungeon
 {
@@ -29,7 +39,7 @@ private:
 	std::vector<DoorStorage> m_allDoors;
 
 public:
-	Dungeon(const int numberOfRooms, const int minRoomSize, const int maxRoomSize);
+	Dungeon(const DungeonParameters params);
 
 private:
 	void populateDungeon();
@@ -46,6 +56,3 @@ private:
 };
 
 #endif // !DUNGEON_H
-
-
-

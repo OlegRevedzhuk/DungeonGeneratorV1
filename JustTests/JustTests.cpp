@@ -19,11 +19,27 @@ enum class Sizes
 
 int main()
 {
-	int dungeonSize{};
-	std::cout << "How many rooms would you like to include? ";
-	std::cin >> dungeonSize;
+	char useDefault{};
+	std::cout << "Would you like to use default settings? (Y/N) ";
+	std::cin >> useDefault;
+	DungeonParameters params{};
 
-	Dungeon dungeon{ dungeonSize, myConstants::rngRoomMinSize, myConstants::rngRoomMaxSize };
+	if (useDefault == 'N' || useDefault == 'n')
+	{
+		std::cout << "Desired number of rooms: ";
+		std::cin >> params.numberOfRooms;
+		std::cout << "Desired minimum room size (MIN " << myConstants::rngRoomMinSize << "): ";
+		std::cin >> params.minRoomSize;
+		if (params.minRoomSize < myConstants::rngRoomMinSize)
+			params.minRoomSize = myConstants::rngRoomMinSize;
+		std::cout << "Desired maximum room size (MAX " << myConstants::rngRoomMaxSize << "): ";
+		std::cin >> params.maxRoomSize;
+		if (params.maxRoomSize > myConstants::rngRoomMaxSize)
+			params.maxRoomSize = myConstants::rngRoomMaxSize;
+	}
+	std::cout << std::endl;
+
+	Dungeon dungeon{ params };
 
 	std::cout << dungeon;
 

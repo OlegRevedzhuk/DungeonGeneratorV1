@@ -36,7 +36,7 @@ public:
 
 	static int randomNumberInRange(const int min, const int max);
 
-	static int distanceToNextCell(const int roomSize, const int numberOfObjects);
+	static int distanceToNextCell(const int numOfEmptyCells, const int numberOfObjects);
 
 	static int numberOfChests();
 

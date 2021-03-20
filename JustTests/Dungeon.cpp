@@ -1,8 +1,8 @@
 #include "Dungeon.h"
 
-Dungeon::Dungeon(const int numberOfRooms, const int minRoomSize, const int maxRoomSize) :
-	m_dungeonSize{ numberOfRooms },
-	m_map{ numberOfRooms }
+Dungeon::Dungeon(const DungeonParameters params) :
+	m_dungeonSize{ params.numberOfRooms },
+	m_map{ params.numberOfRooms }
 {
 	m_dungeonRooms.reserve(m_dungeonSize);
 	m_allDoors.reserve(2 * m_dungeonSize);
@@ -10,7 +10,7 @@ Dungeon::Dungeon(const int numberOfRooms, const int minRoomSize, const int maxRo
 	m_dungeonRooms.emplace_back(std::make_unique<StartingRoom>());
 
 	for (int count{ 1 }; count < m_dungeonSize; ++count)
-		m_dungeonRooms.emplace_back(std::make_unique<Room>(RngGen::randomNumberInRange(minRoomSize, maxRoomSize)));
+		m_dungeonRooms.emplace_back(std::make_unique<DiamondRoom>(RngGen::randomNumberInRange(params.minRoomSize, params.maxRoomSize)));
 
 	populateDungeon();
 
@@ -38,7 +38,7 @@ void Dungeon::connectDungeon()
 
 void Dungeon::addRoomsOnMap()
 {
-	std::vector<Room*> shuffledDungeon(m_dungeonRooms.size());
+	std::vector<Room*> shuffledDungeon(m_dungeonSize);
 	std::transform(m_dungeonRooms.begin(), m_dungeonRooms.end(), shuffledDungeon.begin(), [](const auto& each) { 
 																								return each.get(); });
 

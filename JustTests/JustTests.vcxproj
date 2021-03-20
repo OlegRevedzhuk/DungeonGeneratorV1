@@ -160,6 +160,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Cell.cpp" />
+    <ClCompile Include="DiamondRoom.cpp" />
     <ClCompile Include="Dungeon.cpp" />
     <ClCompile Include="DungeonMap.cpp" />
     <ClCompile Include="JustTests.cpp">
@@ -168,6 +169,7 @@
     </ClCompile>
     <ClCompile Include="RngGen.cpp" />
     <ClCompile Include="Room.cpp" />
+    <ClCompile Include="SquareRoom.cpp" />
     <ClCompile Include="StartingRoom.cpp" />
     <ClCompile Include="Temp.cpp">
       <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdcpp17</LanguageStandard>
@@ -177,10 +179,12 @@
   <ItemGroup>
     <ClInclude Include="Cell.h" />
     <ClInclude Include="constants.h" />
+    <ClInclude Include="DiamondRoom.h" />
     <ClInclude Include="Dungeon.h" />
     <ClInclude Include="DungeonMap.h" />
     <ClInclude Include="RngGen.h" />
     <ClInclude Include="Room.h" />
+    <ClInclude Include="SquareRoom.h" />
     <ClInclude Include="StartingRoom.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

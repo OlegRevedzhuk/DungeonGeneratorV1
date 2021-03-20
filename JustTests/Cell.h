@@ -12,6 +12,8 @@ enum class SpaceType
 	player,
 	trap,
 	monster,
+	none,
+	altar,
 	unknown,
 };
 

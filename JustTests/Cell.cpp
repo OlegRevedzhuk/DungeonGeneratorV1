@@ -13,6 +13,8 @@ char Cell::getCellDisplay() const
 	case SpaceType::player: return 'P';
 	case SpaceType::trap: return 'T';
 	case SpaceType::monster: return 'M';
+	case SpaceType::none: return ' ';
+	case SpaceType::altar: return 'A';
 	default: return '?';
 	}
 }

@@ -2,14 +2,14 @@
 #define STARTINGROOM_H
 
 #include "Cell.h"
-#include "Room.h"
+#include "SquareRoom.h"
 
 class StartingRoom : 
-	public Room
+	public SquareRoom
 {
 public:
 	StartingRoom();
-	virtual ~StartingRoom();
+	virtual ~StartingRoom() override;
 };
 
 #endif // !STARTINGROOM_H
