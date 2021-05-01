@@ -18,5 +18,5 @@ The DungeonMap class was created to hold the arrangement of each room relative t
 The RNGGen class was used as a utility class, mostly for taking care of any randomization throughout the other classes.
 The Dungeon class was used to hold all of the above classes and delegate information and the flow of the application.
 
-I am proud of my final solution. No doubt there is more that can be done, but the solution I got does exactly what I
+I am proud of what the project ended up looking like. No doubt there is more that can be done, but the solution I got does exactly what I
 immagined it would do when I first decided to create it.
