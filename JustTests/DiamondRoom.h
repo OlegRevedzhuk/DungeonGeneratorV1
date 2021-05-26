@@ -13,7 +13,7 @@ public:
 	virtual ~DiamondRoom() override;
 
 private:
-	virtual bool hasAltar() override;
+	virtual bool hasAltar() const override;
 };
 
 #endif // !DIAMOND_ROOM_H

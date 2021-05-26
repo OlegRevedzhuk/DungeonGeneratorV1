@@ -1,7 +1,7 @@
 #include "DiamondRoom.h"
 
 // operator?: is being used to make sure that DiamondRoom is always constructed with an odd size.
-DiamondRoom::DiamondRoom(const int roomSize) : Room{ roomSize % 2 ? roomSize : roomSize + 1 }
+DiamondRoom::DiamondRoom(const int roomSize) : Room{ roomSize % 2 ? roomSize : roomSize + 1 } //default = 11
 {
 	// we will create the room by quadrants with a 1 tile wide section in between them
 	// m_roomSize/2 will be equal to m_roomSize/2 - 1 because of integral arithmetic (m_roomSize is odd)
@@ -57,7 +57,7 @@ DiamondRoom::~DiamondRoom()
 {
 }
 
-bool DiamondRoom::hasAltar()
+bool DiamondRoom::hasAltar() const
 {
 	return m_hasAltar;
 }

@@ -10,7 +10,13 @@ Dungeon::Dungeon(const DungeonParameters params) :
 	m_dungeonRooms.emplace_back(std::make_unique<StartingRoom>());
 
 	for (int count{ 1 }; count < m_dungeonSize; ++count)
-		m_dungeonRooms.emplace_back(std::make_unique<DiamondRoom>(RngGen::randomNumberInRange(params.minRoomSize, params.maxRoomSize)));
+	{
+		if(RngGen::percentChanceOfOccurring(50))
+			m_dungeonRooms.emplace_back(std::make_unique<DiamondRoom>(RngGen::randomNumberInRange(params.minRoomSize, params.maxRoomSize)));
+		else
+			m_dungeonRooms.emplace_back(std::make_unique<SquareRoom>(RngGen::randomNumberInRange(params.minRoomSize, params.maxRoomSize)));
+	}
+		
 
 	populateDungeon();
 

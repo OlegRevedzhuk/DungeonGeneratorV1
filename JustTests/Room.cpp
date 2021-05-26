@@ -160,7 +160,7 @@ void Room::setNumberOfEmpty()
 	m_numberOfEmptyCells = empty;
 }
 
-bool Room::hasAltar()
+bool Room::hasAltar() const
 {
 	return false;
 }

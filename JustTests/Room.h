@@ -47,7 +47,7 @@ protected:
 private:
 	void populateTrap(const int x, const int y, const int chance = 20);
 
-	virtual bool hasAltar();
+	virtual bool hasAltar() const;
 
 	friend std::ostream& operator<< (std::ostream &out, const Room &room);
 };
