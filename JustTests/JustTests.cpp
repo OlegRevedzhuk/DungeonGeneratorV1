@@ -43,5 +43,10 @@ int main()
 
 	std::cout << dungeon;
 
+	std::string x{};
+	std::cout << "Each letter in the room displays represents a different object type.\n"
+		<< "M = monster, A = altar, D = door, T = trap, C = chest, and P = player.\n";
+	std::cin >> x;
+
 	return 0;
 }

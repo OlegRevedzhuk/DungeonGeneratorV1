@@ -9,7 +9,7 @@ namespace myConstants
 
 	// includes walls
 	constexpr int rngRoomMinSize{ 7 };
-	constexpr int rngRoomMaxSize{ 11 };
+	constexpr int rngRoomMaxSize{ 15 };
 	constexpr int rngDungeonDefaultSize{ 10 };
 
 	constexpr int minMonsterCount{ 3 };
